@@ -81,18 +81,8 @@ A GitHub Actions workflow (`.github/workflows/docker-build.yml`) builds the Dock
 
 ## Reflection
 
-**Trickiest part:** Honestly, nothing here was technically hard — the task is intentionally small. The part I spent the most time thinking about was scope: how much to add versus how much to leave out. It's tempting to reach for things like input validation libraries, a proper data layer, or auth, but for a 3-endpoint in-memory API those add more surface area than value.
+There was nothing tricking in there. it's simple.
 
-**Why I made the choices I did:**
-- **Flask over a bigger framework (FastAPI, Django):** Flask has almost no ceremony — one file gets you a working API, which fits an exercise like this. FastAPI would've given free request validation and docs, which is nice, but felt like more than the task called for.
-- **In-memory list instead of even SQLite:** The prompt explicitly said this was fine, and a list plus a counter is the simplest thing that can possibly work. No schema, no migrations, nothing to reason about across restarts.
-- **`python:3.11-slim` base image:** Small image, still has pip and a full Python install, avoids the extra complexity of Alpine's musl/libc quirks with some Python packages.
-- **CI just builds, doesn't deploy:** That's what was asked for, and it's also the honest boundary of what a "does this still build" check should do without more infrastructure (a registry, credentials, a target environment) to deploy into.
+The choice I made of python is that i am familiar with that and with other languages don't have much experience in development. Although I can understand them as well but I though python would be easy.
 
-**If I had another day, I'd:**
-- Add a real test suite (pytest + Flask's test client) and run it in CI, not just the Docker build.
-- Add basic input validation/error handling for malformed JSON, wrong types, etc.
-- Swap in SQLite or Postgres so data survives a restart, with a simple migration story.
-- Add pagination and filtering on `GET /tasks` (e.g. `?done=true`) once the list could realistically grow.
-- Add OpenAPI/Swagger docs, which is one of the reasons FastAPI becomes more attractive once the API is beyond a toy.
-- Pin dependencies more strictly and add a `.dockerignore` and non-root user in the Dockerfile for a slightly more production-minded image.
+If I got another day then obviously i will add in Interface for the todo list so user could interact with that instead of manually sending requests.
